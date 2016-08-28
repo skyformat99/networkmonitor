@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "networkmonitor", "networkmonitor.vcproj", "{4A83BD83-7DF3-4FC3-9A18-5E380A02CDCF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{4A83BD83-7DF3-4FC3-9A18-5E380A02CDCF}.Debug.ActiveCfg = Debug|Win32
+		{4A83BD83-7DF3-4FC3-9A18-5E380A02CDCF}.Debug.Build.0 = Debug|Win32
+		{4A83BD83-7DF3-4FC3-9A18-5E380A02CDCF}.Release.ActiveCfg = Release|Win32
+		{4A83BD83-7DF3-4FC3-9A18-5E380A02CDCF}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
