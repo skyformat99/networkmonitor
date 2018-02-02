@@ -4,6 +4,7 @@ network monitor tools
 无聊时写的一个网络流量监控小工具，可以在winXP,win7,win8系统很好工作。
 同时可以配置窗口大小，文字颜色，曲线图颜色
 
+
 config.ini 配置说明
 pos_x，pos_y  流量条起始坐标
 pos2_x，pos2_y  窗口起始坐标
