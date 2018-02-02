@@ -1,32 +1,3 @@
-/* 
-===============================================================================
-The MIT License
-
-
-Copyright (C) 1994-2015 simawei<simawei@qq.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-===============================================================================
-*/
-
-
 // networkmonitorDlg.cpp : 实现文件
 //
 
@@ -45,6 +16,9 @@ THE SOFTWARE.
 
 CNetStat cnet;
  
+
+#define HOTKEY_ID 9999
+
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
  
@@ -84,6 +58,14 @@ void CnetworkmonitorDlg::On32776()
 	dlg.DoModal();
 }
 
+
+int CnetworkmonitorDlg::OnHOTKEY()
+{
+	//注销 。
+	::system("shutdown -l");
+	return 1;
+}
+
 // CnetworkmonitorDlg 消息处理程序
 BOOL CnetworkmonitorDlg::PreTranslateMessage(MSG* pMsg) 
 { 
@@ -96,6 +78,7 @@ BOOL CnetworkmonitorDlg::PreTranslateMessage(MSG* pMsg)
 		m_openToolTip.RelayEvent(pMsg); 
 
 		break;
+ 
 
 	case WM_LBUTTONDBLCLK:
 		if (m_drawDlg.IsWindowVisible())
@@ -206,6 +189,16 @@ BOOL CnetworkmonitorDlg::OnInitDialog()
 
  
 	
+	int ret=::RegisterHotKey(m_hWnd, //  hWnd：接收热键产生WM_HOTKEY消息的窗口句柄。若该参数NULL，传递给调用线程的WM_HOTKEY消息必须在消息循环中中进行处理。
+	   HOTKEY_ID,  //定义热键的标识符。调用线程中的其他热键不能使用同样的标识符。应用功能程序必须定义一个0X0000-0xBFFF范围的值。一个共享的动态链接库（DLL）必须定义一个0xC000-0xFFFF范围的值伯GlobalAddAtom函数返回该范围）。为了避免与其他动态链接库定义的热键冲突，一个DLL必须使用GlobalAddAtom函数获得热键的标识符。
+	   MOD_CONTROL   |   MOD_SHIFT,
+	   
+		'L');       //注册   ctrl   +   shift   +   L   
+	if(ret==0)
+	{
+		::AfxMessageBox("注册热键失败！");
+	}
+
 
 	//CFloatWnd*	pFloatWnd = new CFloatWnd( );
  
@@ -213,8 +206,49 @@ BOOL CnetworkmonitorDlg::OnInitDialog()
 
 //	SetTimer(1,20,0);//隐藏窗体的timer,只用一次.然后kill
 
+
+
+	//写入注册表,开机自启动
+	HKEY hKey; //找到系统的启动项 
+	LPCTSTR lpRun = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"; 
+	//打开启动项Key 
+	long lRet = RegOpenKeyEx(HKEY_LOCAL_MACHINE, lpRun, 0, KEY_WRITE, &hKey);
+	if(lRet == ERROR_SUCCESS)
+	{   
+		char pFileName[MAX_PATH] = {0};  
+		//得到程序自身的全路径  
+		DWORD dwRet = GetModuleFileName(NULL, pFileName, MAX_PATH);  
+		//添加一个子Key,并设置值 
+		// 下面的"getip"是应用程序名字（不加后缀.exe） 
+		lRet = RegSetValueEx(hKey, "networkmonitor", 0, REG_SZ, (BYTE *)pFileName, dwRet);
+
+		//关闭注册表 
+		RegCloseKey(hKey);  
+		if(lRet != ERROR_SUCCESS)     
+		{   
+			AfxMessageBox("系统参数错误,不能随系统启动");   
+		}
+	}
+
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 } 
+
+LRESULT   CnetworkmonitorDlg::WindowProc(UINT   message,   WPARAM   wParam,   LPARAM   lParam)     
+{   
+	//   TODO:   Add   your   specialized   code   here   and/or   call   the   base   class   
+	if   (message==WM_HOTKEY)   
+	{   
+		if   (wParam==HOTKEY_ID)   
+		{   
+			   
+						return OnHOTKEY();
+				 
+		}   
+
+	}   
+	return   CDialog::WindowProc(message,   wParam,   lParam);   
+}   
+
 
 void CnetworkmonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -352,6 +386,9 @@ void CnetworkmonitorDlg::OnExit()
 	WritePrivateProfileString ("window","download_B", msg ,  FilePath); 
 
 
+
+		//热键删除
+	UnregisterHotKey(m_hWnd,HOTKEY_ID);   ////   
 
 	// TODO: Add your command handler code here
 	//通知父窗体退出
