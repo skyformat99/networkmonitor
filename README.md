@@ -1,9 +1,31 @@
 # networkmonitor
 network monitor tools
 
-æ— èŠæ—¶å†™çš„ä¸€ä¸ªç½‘ç»œæµé‡ç›‘æ§å°å·¥å…·ï¼Œå¯ä»¥åœ¨winXP,win7,win8ç³»ç»Ÿå¾ˆå¥½å·¥ä½œã€‚
-é‡‡ç”¨vs2003å¼€å‘,mfcé™æ€åº“ç¼–è¯‘ã€‚
-ä¸‹é¢æ˜¯è¿è¡Œæˆªå›¾
+ÎŞÁÄÊ±Ğ´µÄÒ»¸öÍøÂçÁ÷Á¿¼à¿ØĞ¡¹¤¾ß£¬¿ÉÒÔÔÚwinXP,win7,win8ÏµÍ³ºÜºÃ¹¤×÷¡£
+Í¬Ê±¿ÉÒÔÅäÖÃ´°¿Ú´óĞ¡£¬ÎÄ×ÖÑÕÉ«£¬ÇúÏßÍ¼ÑÕÉ«
+
+config.ini ÅäÖÃËµÃ÷
+pos_x£¬pos_y  Á÷Á¿ÌõÆğÊ¼×ø±ê
+pos2_x£¬pos2_y  ´°¿ÚÆğÊ¼×ø±ê
+TipTextColor tipÑÕÉ«
+height1024kb=30  Ò»mÍøËÙÕ¼30pxÒ»¸ñ
+width=300  ´°¿Ú¿í¸ß
+height=200 
+up_R up_G up_B ÉÏ´«ÇúÏßµÄrgbÑÕÉ«
+download_R=255   ÏÂÔØÇúÏßµÄrgbÑÕÉ«
+download_G=0
+download_B=0
+
+Transparent2=215  Á½¸ö´°ÌåµÄÍ¸Ã÷¶È 0-255
+Transparent=215 
+
+bkimg=logo.bmp  ¿ÉÒÔ×Ô¶¨ÒåÁ÷Á¿ÌõÑùÊ½£¬ÎÄ¼ş²»´æÔÚÔòÊ¹ÓÃÄ¬ÈÏÑùÊ½
+
+[network]
+AdapterIndex=7   ¼ÇÂ¼±£´æµÄÍø¿¨Ë÷Òı
+
+²ÉÓÃvs2003¿ª·¢,mfc¾²Ì¬¿â±àÒë¡£
+ÏÂÃæÊÇÔËĞĞ½ØÍ¼
 ![image](https://github.com/344717871/networkmonitor/blob/master/screenshot.png)
 
-æœ‰é—®é¢˜å¯ä»¥mailæˆ‘ simawei@qq.com
+ÓĞÎÊÌâ¿ÉÒÔmailÎÒ simawei@qq.com
